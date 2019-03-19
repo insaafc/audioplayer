@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+
+<html>
+    <head>
+		<title>Audio Player</title>
+        <link href="Main.css" rel="stylesheet"/>
+        <script src="jquery-1.10.2.min.js"></script>
+    </head>
+    <body>
+        <div id="bg">
+            <div id="blackLayer"></div>
+            <img src="image.jpg" alt=""/>
+        </div>
+       
+        <div id="main">
+            <div id="thumb">
+                <img src="image.jpg" alt=""/>
+            </div>
+            <div id="player">
+                <div id="title">Demo</div>
+                <div id="buttons">
+                    <button id="pre" onclick="pre()"><img src="Pre.png" height="90%" width="90%" alt="previous"/></button>
+                    <button id="play" onclick="playOrPauseSong()"><img src="Pause.png" alt="play"/></button>
+                    <button id="next" onclick="next()"><img src="Next.png" height="90%" width="90%" alt="pause"/></button>
+                </div>
+                
+                <div id="seek-bar">
+                    <div id="fill"></div>
+                    <div id="handle"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+	
+	
+    <script type="text/javascript">
+		
+		// Assign handlers immediately after making the request,
+// and remember the jqxhr object for this request
+		
+$(document).ready(function(){
+	
+	$("#getData").on("load" , function() {
+	  
+	
+$.getJSON("https://bitbucket.org/allank/player_insaaf/raw/e0017e1689f9cce318c00fea333e1bb9eb3ec39f/audio.json"", function( data ) {
+  var items = ["author", "provider_name", "author_name", "title" "description" ,"url" "thumb" ,"thumbnail_url", "audio_url"];
+  $.each( data, function( key, val ) {
+    items.push( "<li id='" + key + "'>" + val + "</li>" );
+  });
+ 
+  $( "<ul/>", {
+    "class": "my-new-list",
+    html: items.join( "" )
+  }).appendTo( "body" );
+});
+	
+	//loading content 
+    
+        var audio_url = ["audio.mp3"];
+        var thumb = ["image.jpg"];
+        
+        var title = document.getElementById("title");
+        var fillBar = document.getElementById("fill");
+        
+        var audio_url = new Audio();
+        var currentSong = 0;    // it point to the current song
+        
+        window.onload = playSong;   // it will call the function playSong when window is load
+        
+        function playSong(){
+            
+            song.src = audio_url[currentSong];  //set the source of 0th song 
+            
+            Title.textContent = audio_url[currentSong]; // set the title of song
+            
+            song.play();    // play the song
+        }
+        
+        function playOrPauseSong(){
+            
+            if(song.paused){
+                song.play();
+                $("#play img").attr("src","Pause.png");
+            }
+            else{
+                song.pause();
+                $("#play img").attr("src","Play.png");
+            }
+        }
+        
+        song.addEventListener('timeupdate',function(){ 
+            
+            var position = song.currentTime / song.duration;
+            
+            fillBar.style.width = position * 100 +'%';
+        });
+        
+    
+        function next(){
+            
+            currentSong++;
+            if(currentSong > 2){
+                currentSong = 0;
+            }
+            playSong();
+            $("#play img").attr("src","Pause.png");
+            $("#image img").attr("src",poster[currentSong]);
+            $("#bg img").attr("src",poster[currentSong]);
+        }
+    
+        function pre(){
+            
+            currentSong--;
+            if(currentSong < 0){
+                currentSong = 2;
+            }
+            playSong();
+            $("#play img").attr("src","Pause.png");
+            $("#image img").attr("src",poster[currentSong]);
+            $("#bg img").attr("src",poster[currentSong]);
+        }
+        
+    
+    </script>
+    
+</html>

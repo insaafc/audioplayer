@@ -44,8 +44,8 @@ $(document).ready(function(){
 	$("#getData").on("load" , function() {
 	  
 	
-$.getJSON("https://bitbucket.org/allank/player_insaaf/raw/e0017e1689f9cce318c00fea333e1bb9eb3ec39f/audio.json"", function( data ) {
-  var items = ["author", "provider_name", "author_name", "title" "description" ,"url" "thumb" ,"thumbnail_url", "audio_url"];
+$.getJSON("https://bitbucket.org/allank/player_insaaf/raw/e0017e1689f9cce318c00fea333e1bb9eb3ec39f/audio.json", function( data ) {
+  var items = ["author", "provider_name", "author_name", "title", "description" ,"url", "thumb" ,"thumbnail_url", "audio_url"];
   $.each( data, function( key, val ) {
     items.push( "<li id='" + key + "'>" + val + "</li>" );
   });
